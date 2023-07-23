@@ -2,6 +2,7 @@
 
 ### Install docker on EC2(t3.medium and Ubuntu 20.04 LTS)
 ```
+sudo su
 sudo apt-get update
 sudo apt-get install ca-certificates curl gnupg lsb-release
 
@@ -15,35 +16,39 @@ echo \
 sudo apt-get update
 sudo chmod a+r /etc/apt/keyrings/docker.gpg
 sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt-get install docker-ce docker-c e-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 sudo systemctl status docker
 sudo systemctl enable --now docker
 sudo usermod -aG docker ec2-user
 newgrp docker
-sudo systemctl restart docker
+sudo systemctl r estart docker
 docker ps
-```
+``` 
 
 ### Install Kubectl
-```
-https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
-```
-```
+
+#{{https://minikube.sigs.k8s.io/docs/start/}=new updates
+#```
+#https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
+#```
+#```}
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+cd /opt/
 mv kubectl /bin/kubectl
 chmod a+x /bin/kubectl
 ```
 
 ### Install Minikube
+{```
+#https://aws.plainenglish.io/running-kubernetes-using-minikube-cluster-on-the-aws-cloud-4259df916a07
+#https://minikube.sigs.k8s.io/docs/start/
+#https://minikube.sigs.k8s.io/docs/drivers/none/#requirements
 ```
-https://aws.plainenglish.io/running-kubernetes-using-minikube-cluster-on-the-aws-cloud-4259df916a07
-https://minikube.sigs.k8s.io/docs/start/
-https://minikube.sigs.k8s.io/docs/drivers/none/#requirements
-```
-```
+```}
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 sudo install minikube-linux-amd64 /usr/bin/minikube
+ls -l /usr/bin/minikube
 sudo apt install conntrack -y
 ```
 If you want to use the combination of the none driver from Kubernetes v1.24+ the Docker container runtime you'll need to install cri-dockerd on your system
@@ -57,11 +62,14 @@ git clone https://github.com/Mirantis/cri-dockerd.git
 ```
 mkdir bin
 VERSION=$((git describe --abbrev=0 --tags | sed -e 's/v//') || echo $(cat VERSION)-$(git log -1 --pretty='%h')) PRERELEASE=$(grep -q dev <<< "${VERSION}" && echo "pre" || echo "") REVISION=$(git log -1 --pretty='%h')
+cd cri-dockerd/
+VERSION=$((git describe --abbrev=0 --tags | sed -e 's/v//') || echo $(cat VERSION)-$(git log -1 --pretty='%h')) PRERELEASE=$(grep -q dev <<< "${VERSION}" && echo "pre" || echo "") REVISION=$(git log -1 --pretty='%h')
 go build -ldflags="-X github.com/Mirantis/cri-dockerd/version.Version='$VERSION}' -X github.com/Mirantis/cri-dockerd/version.PreRelease='$PRERELEASE' -X github.com/Mirantis/cri-dockerd/version.BuildTime='$BUILD_DATE' -X github.com/Mirantis/cri-dockerd/version.GitCommit='$REVISION'" -o cri-dockerd
-```
+``` 
 ```
 # Run these commands as root
 ###Install GO###
+cd ../
 wget https://storage.googleapis.com/golang/getgo/installer_linux
 chmod +x ./installer_linux
 ./installer_linux
@@ -83,6 +91,7 @@ systemctl enable --now cri-docker.socket
 ### Install CRICTL
 https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md
 ```
+cd ../
 VERSION="v1.26.0" # check latest version in /releases page
 wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-$VERSION-linux-amd64.tar.gz
 sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /usr/local/bin
