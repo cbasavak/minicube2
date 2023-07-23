@@ -46,6 +46,7 @@ chmod a+x /bin/kubectl
 #https://minikube.sigs.k8s.io/docs/drivers/none/#requirements
 ```
 ```}
+cd /opt/
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 sudo install minikube-linux-amd64 /usr/bin/minikube
 ls -l /usr/bin/minikube
