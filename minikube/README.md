@@ -108,7 +108,8 @@ EOF
 # How do I install containernetworking-plugins for none driver?
 Pick the version from here -> https://github.com/containernetworking/plugins/releases
 ```
-CNI_PLUGIN_VERSION="<version_here>"
+#CNI_PLUGIN_VERSION="<version_here>" add recent version check in above website
+CNI_PLUGIN_VERSION="v1.3.0"
 CNI_PLUGIN_TAR="cni-plugins-linux-amd64-$CNI_PLUGIN_VERSION.tgz" # change arch if not on amd64
 CNI_PLUGIN_INSTALL_DIR="/opt/cni/bin"
 
